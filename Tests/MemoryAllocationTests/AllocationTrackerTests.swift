@@ -72,7 +72,7 @@ struct AllocationTrackerTests {
     }
 
     @Test
-    func `measure async throwing`()  throws {
+    func `measure async throwing`() throws {
         struct TestError: Error {}
 
         let stats = AllocationTracker.measure {
