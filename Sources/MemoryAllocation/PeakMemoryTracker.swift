@@ -3,6 +3,8 @@
 //
 // Peak memory usage tracking
 
+import Synchronization
+
 /// Peak memory tracker
 ///
 /// Tracks the peak memory usage during program execution.
@@ -20,53 +22,20 @@
 /// print("Peak allocations: \(tracker.peakAllocations)")
 /// ```
 public final class PeakMemoryTracker: Sendable {
-    private struct State {
+    private struct State: Sendable {
         var peakBytes: Int = 0
         var peakAllocations: Int = 0
         var samples: [AllocationStats] = []
     }
 
-    private let state: any LockProtocol<State>
+    private let state = Mutex<State>(State())
     private let baseline: AllocationStats
-
-    private protocol LockProtocol<T>: Sendable {
-        associatedtype T
-        func withLock<Result>(_ body: (inout sending T) throws -> sending Result) rethrows -> Result
-    }
-
-    @available(macOS 15.0, iOS 18.0, watchOS 11.0, tvOS 18.0, *)
-    private final class Modern: LockProtocol, @unchecked Sendable {
-        private let lock: ModernLock<State>
-        init(_ value: State) { self.lock = ModernLock(value) }
-        func withLock<Result>(
-            _ body: (inout sending State) throws -> sending Result
-        ) rethrows -> Result {
-            try lock.withLock(body)
-        }
-    }
-
-    private final class Legacy: LockProtocol, @unchecked Sendable {
-        private let lock = LegacyLock()
-        private var value: State
-        init(_ value: State) { self.value = value }
-        func withLock<Result>(
-            _ body: (inout sending State) throws -> sending Result
-        ) rethrows -> Result {
-            try lock.withLock { try body(&value) }
-        }
-    }
 
     /// Initialize a peak memory tracker
     public init() {
         #if os(Linux)
             AllocationStats.startTracking()
         #endif
-
-        if #available(macOS 15.0, iOS 18.0, watchOS 11.0, tvOS 18.0, *) {
-            self.state = Modern(State())
-        } else {
-            self.state = Legacy(State())
-        }
 
         self.baseline = AllocationStats.capture()
     }

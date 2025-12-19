@@ -3,6 +3,8 @@
 //
 // Allocation profiling with histograms and statistics
 
+import Synchronization
+
 /// Allocation profiler
 ///
 /// Profiles memory allocations over multiple runs to generate statistics
@@ -24,43 +26,10 @@
 /// print("P95: \(profiler.percentileBytes(95)) bytes")
 /// ```
 public final class AllocationProfiler: Sendable {
-    private let measurements: any LockProtocol<[AllocationStats]>
-
-    private protocol LockProtocol<T>: Sendable {
-        associatedtype T
-        func withLock<Result>(_ body: (inout sending T) throws -> sending Result) rethrows -> Result
-    }
-
-    @available(macOS 15.0, iOS 18.0, watchOS 11.0, tvOS 18.0, *)
-    private final class Modern: LockProtocol, @unchecked Sendable {
-        private let lock: ModernLock<[AllocationStats]>
-        init(_ value: [AllocationStats]) { self.lock = ModernLock(value) }
-        func withLock<Result>(
-            _ body: (inout sending [AllocationStats]) throws -> sending Result
-        ) rethrows -> Result {
-            try lock.withLock(body)
-        }
-    }
-
-    private final class Legacy: LockProtocol, @unchecked Sendable {
-        private let lock = LegacyLock()
-        private var value: [AllocationStats]
-        init(_ value: [AllocationStats]) { self.value = value }
-        func withLock<Result>(
-            _ body: (inout sending [AllocationStats]) throws -> sending Result
-        ) rethrows -> Result {
-            try lock.withLock { try body(&value) }
-        }
-    }
+    private let measurements = Mutex<[AllocationStats]>([])
 
     /// Initialize an allocation profiler
-    public init() {
-        if #available(macOS 15.0, iOS 18.0, watchOS 11.0, tvOS 18.0, *) {
-            self.measurements = Modern([])
-        } else {
-            self.measurements = Legacy([])
-        }
-    }
+    public init() {}
 
     /// Profile a single execution
     ///

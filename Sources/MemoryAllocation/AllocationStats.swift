@@ -85,7 +85,7 @@ public struct AllocationStats: Sendable, Equatable {
     ///
     /// - Returns: Current allocation statistics
     public static func capture() -> AllocationStats {
-        #if os(macOS) || os(iOS) || os(watchOS) || os(tvOS)
+        #if os(macOS) || os(iOS) || os(watchOS) || os(tvOS) || os(visionOS)
             return captureDarwin()
         #elseif os(Linux)
             return captureLinux()
@@ -94,8 +94,10 @@ public struct AllocationStats: Sendable, Equatable {
         #endif
     }
 
-    #if os(macOS) || os(iOS) || os(watchOS) || os(tvOS)
+    #if os(macOS) || os(iOS) || os(watchOS) || os(tvOS) || os(visionOS)
         private static func captureDarwin() -> AllocationStats {
+            //  Note: malloc_zone_statistics returns process-wide stats
+            // For thread-local tracking, use .serialized trait on test suites
             var stats = malloc_statistics_t()
             malloc_zone_statistics(nil, &stats)
 
@@ -125,6 +127,8 @@ public struct AllocationStats: Sendable, Equatable {
         ///
         /// This enables the LD_PRELOAD malloc/free hooks.
         /// Must be called before measuring allocations.
+        ///
+        /// Note: Requires LD_PRELOAD setup for thread-local tracking.
         public static func startTracking() {
             tracking_start()
         }
