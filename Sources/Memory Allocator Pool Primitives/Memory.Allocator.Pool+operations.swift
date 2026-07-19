@@ -44,7 +44,14 @@ extension Memory.Allocator.Pool where Resource: ~Copyable {
 
         let slotStride = Affine.Discrete.Ratio<Slot, Memory>(slotAlignment.align.up(slotSize))
         // Number of whole slots that fit in the region's byte capacity (Region seam).
-        let (capacity, _) = slotStride.quotientAndRemainder(dividing: backing.capacity)
+        // WHY: `slotStride`'s factor is `slotAlignment.align.up(slotSize)` where
+        // `slotSize >= minimumSlotSize` is guarded just above — structurally positive —
+        // and a byte capacity above `Int.max` trapped before the typed-throws migration
+        // too; `try!` preserves the pre-migration trap contract without mapping into
+        // this init's `Error` type.
+        // swift-format-ignore: NeverUseForceTry
+        // swiftlint:disable:next force_try
+        let (capacity, _) = try! slotStride.quotientAndRemainder(dividing: backing.capacity)
         guard capacity > .zero else {
             throw .invalidCapacity
         }
@@ -217,7 +224,13 @@ extension Memory.Allocator.Pool where Resource: ~Copyable {
         let byteCount = Memory.Address.Count(UInt(rawOffset))
         guard byteCount < _capacity * _slotStride else { return nil }
 
-        let (slotCount, remainder) = _slotStride.quotientAndRemainder(dividing: byteCount)
+        // WHY: `_slotStride` was validated positive at pool construction, and
+        // `byteCount` is bounded by `_capacity * _slotStride` via the guard just
+        // above, so it cannot exceed `Int.max`; `try!` preserves the pre-migration
+        // trap contract without cascading `throws` into this nil-returning query.
+        // swift-format-ignore: NeverUseForceTry
+        // swiftlint:disable:next force_try
+        let (slotCount, remainder) = try! _slotStride.quotientAndRemainder(dividing: byteCount)
         guard remainder == .zero else { return nil }
 
         return slotCount.map(Ordinal.init)

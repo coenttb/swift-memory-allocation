@@ -84,8 +84,10 @@ extension Memory.Pool {
         /// Operation: claims an unallocated slot, or throws `.exhausted` (L4).
         mutating func allocateSlot() throws(Memory.Pool.Error) -> Index<Memory.Pool.Slot>
 
-        /// Operation: returns an allocated in-range slot to the pool. For such a slot
-        /// this CANNOT fail (L4 — the `try!` license); double-free/out-of-range throw.
+        /// Operation: returns an allocated in-range slot to the pool.
+        ///
+        /// For such a slot this CANNOT fail (L4 — the `try!` license);
+        /// double-free/out-of-range throw.
         mutating func deallocate(at slot: Index<Memory.Pool.Slot>) throws(Memory.Pool.Error)
     }
 }
