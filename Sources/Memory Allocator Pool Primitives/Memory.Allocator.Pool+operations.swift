@@ -74,11 +74,11 @@ extension Memory.Allocator.Pool where Resource: ~Copyable {
 extension Memory.Allocator.Pool where Resource: ~Copyable {
     /// The stable base address of the backing region's first byte.
     @inlinable
-    internal var _base: Memory.Address { backing.base }
+    package var _base: Memory.Address { backing.base }
 
     /// Returns the pointer to the slot at the given index (no bounds check).
     @inlinable
-    internal func _pointer(at index: Index<Slot>) -> UnsafeMutableRawPointer {
+    package func _pointer(at index: Index<Slot>) -> UnsafeMutableRawPointer {
         // SAFETY: `index` is bounded by callers; `mutablePointer` is the region's escape hatch.
         unsafe _base.mutablePointer.advanced(
             by: Index<Slot>.Offset(fromZero: index) * _slotStride
@@ -87,7 +87,7 @@ extension Memory.Allocator.Pool where Resource: ~Copyable {
 
     /// The end-of-list sentinel: one-past-last valid slot index (analogous to `endIndex`).
     @inlinable
-    internal var _sentinel: Index<Slot> { _capacity.map(Ordinal.init) }
+    package var _sentinel: Index<Slot> { _capacity.map(Ordinal.init) }
 }
 
 // MARK: - Properties
