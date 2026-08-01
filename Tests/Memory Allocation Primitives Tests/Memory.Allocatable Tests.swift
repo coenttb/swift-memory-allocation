@@ -18,7 +18,10 @@ import Memory_Allocation_Primitives
 import Testing
 
 @Suite(.serialized)
-struct MemoryAllocatableSurfaceTests {
+struct `Memory.Allocatable Surface Tests` {
+    @Suite struct Unit {}
+    @Suite struct `Edge Case` {}
+    @Suite struct Integration {}
 
     /// A self-owning raw byte region — the minimal `Memory.Growable` (and so `Memory.Allocatable`)
     /// stub.
@@ -33,6 +36,8 @@ struct MemoryAllocatableSurfaceTests {
     @safe
     struct Region: Memory.Growable, Memory.Allocatable, ~Copyable {
         let pointer: UnsafeMutableRawPointer
+        // swift-linter:disable:next compound identifier
+        // REASON: byteCount mirrors the stdlib UnsafeMutableRawPointer.allocate(byteCount:) parameter vocabulary (test-local stub, not a public surface).
         let byteCount: Int
 
         init(byteCount: Memory.Address.Count, alignment: Memory.Alignment) {
@@ -49,14 +54,16 @@ struct MemoryAllocatableSurfaceTests {
 
         deinit { unsafe pointer.deallocate() }
     }
+}
 
-    @Test func growableConstructsToTheRequestedByteCount() {
-        let region = Region(byteCount: Memory.Address.Count(UInt(256)), alignment: .`8`)
+extension `Memory.Allocatable Surface Tests`.Unit {
+    @Test func `growable constructs to the requested byte count`() {
+        let region = `Memory.Allocatable Surface Tests`.Region(byteCount: Memory.Address.Count(UInt(256)), alignment: .`8`)
         #expect(region.capacity == Memory.Address.Count(UInt(256)))
     }
 
-    @Test func adoptRoleVendsAPassthroughOverTheWholeRegion() {
-        let region = Region(byteCount: Memory.Address.Count(UInt(128)), alignment: .`8`)
+    @Test func `adopt role vends a passthrough over the whole region`() {
+        let region = `Memory.Allocatable Surface Tests`.Region(byteCount: Memory.Address.Count(UInt(128)), alignment: .`8`)
         let allocator = region.makeAllocator()
         // The passthrough forwards the Region seam (base + capacity) of the adopted region.
         #expect(allocator.capacity == Memory.Address.Count(UInt(128)))
