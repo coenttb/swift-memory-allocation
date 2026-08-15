@@ -58,12 +58,18 @@ struct `Memory.Allocatable Surface Tests` {
 
 extension `Memory.Allocatable Surface Tests`.Unit {
     @Test func `growable constructs to the requested byte count`() {
-        let region = `Memory.Allocatable Surface Tests`.Region(byteCount: Memory.Address.Count(UInt(256)), alignment: .`8`)
+        let region = `Memory.Allocatable Surface Tests`.Region(
+            byteCount: Memory.Address.Count(UInt(256)),
+            alignment: .`8`
+        )
         #expect(region.capacity == Memory.Address.Count(UInt(256)))
     }
 
     @Test func `adopt role vends a passthrough over the whole region`() {
-        let region = `Memory.Allocatable Surface Tests`.Region(byteCount: Memory.Address.Count(UInt(128)), alignment: .`8`)
+        let region = `Memory.Allocatable Surface Tests`.Region(
+            byteCount: Memory.Address.Count(UInt(128)),
+            alignment: .`8`
+        )
         let allocator = region.makeAllocator()
         // The passthrough forwards the Region seam (base + capacity) of the adopted region.
         #expect(allocator.capacity == Memory.Address.Count(UInt(128)))
