@@ -10,11 +10,11 @@
 // ===----------------------------------------------------------------------===//
 
 public import Memory_Address_Primitives
-public import Memory_Alignment_Primitives
-public import Memory_Allocation_Primitive
+import Memory_Alignment_Primitives
+import Memory_Allocation_Primitive
 public import Memory_Allocator_Primitive
 public import Memory_Primitive
-public import Memory_Primitives_Standard_Library_Integration
+import Memory_Primitives_Standard_Library_Integration
 public import Memory_Region_Primitives
 
 // The Arena product is DECLARED here, from the Arena module, via a `where Resource: ~Copyable`
