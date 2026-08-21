@@ -12,46 +12,37 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
-        // MARK: - Namespace
+
         .library(
             name: "Memory Allocator Primitive",
             targets: ["Memory Allocator Primitive"]
         ),
 
-        // MARK: - Allocator capability protocol (the seam triple home)
         .library(
             name: "Memory Allocator Protocol Primitives",
             targets: ["Memory Allocator Protocol Primitives"]
         ),
 
-        // MARK: - Arena strategy
         .library(
             name: "Memory Allocator Arena Primitives",
             targets: ["Memory Allocator Arena Primitives"]
         ),
 
-        // MARK: - Pool strategy
         .library(
             name: "Memory Allocator Pool Primitives",
             targets: ["Memory Allocator Pool Primitives"]
         ),
 
-        // MARK: - Allocation Primitive (namespace + the seam triple)
         .library(
             name: "Memory Allocation Primitive",
             targets: ["Memory Allocation Primitive"]
         ),
 
-        // MARK: - Umbrella
-        // This package now owns the canonical "Memory Allocation Primitives" module:
-        // swift-memory-primitives no longer declares an allocation product/target, so the
-        // backing umbrella target reclaims the bare "Memory Allocation Primitives" name.
         .library(
             name: "Memory Allocation Primitives",
             targets: ["Memory Allocation Primitives"]
         ),
 
-        // MARK: - Test Support (the pool law harness L1–L5)
         .library(
             name: "Memory Allocation Primitives Test Support",
             targets: ["Memory Allocation Primitives Test Support"]
@@ -80,7 +71,7 @@ let package = Package(
         ),
     ],
     targets: [
-        // MARK: - Namespace
+
         .target(
             name: "Memory Allocator Primitive",
             dependencies: [
@@ -91,7 +82,6 @@ let package = Package(
             ]
         ),
 
-        // MARK: - Allocator capability protocol (the seam triple home + the Allocatable/Growable seams)
         .target(
             name: "Memory Allocator Protocol Primitives",
             dependencies: [
@@ -103,7 +93,6 @@ let package = Package(
             ]
         ),
 
-        // MARK: - Allocation Primitive (namespace + the seam triple)
         .target(
             name: "Memory Allocation Primitive",
             dependencies: [
@@ -115,7 +104,6 @@ let package = Package(
             ]
         ),
 
-        // MARK: - Arena strategy
         .target(
             name: "Memory Allocator Arena Primitives",
             dependencies: [
@@ -133,7 +121,6 @@ let package = Package(
             ]
         ),
 
-        // MARK: - Pool strategy
         .target(
             name: "Memory Allocator Pool Primitives",
             dependencies: [
@@ -158,7 +145,6 @@ let package = Package(
             ]
         ),
 
-        // MARK: - Umbrella
         .target(
             name: "Memory Allocation Primitives",
             dependencies: [
@@ -170,7 +156,6 @@ let package = Package(
             ]
         ),
 
-        // MARK: - Test Support (the pool law harness L1–L5)
         .target(
             name: "Memory Allocation Primitives Test Support",
             dependencies: [
@@ -181,14 +166,6 @@ let package = Package(
             path: "Tests/Support"
         ),
 
-        // MARK: - Tests
-        //
-        // In-package tests exercise ONLY the generic / element-free surface (the new
-        // `Memory.Allocatable` adopt-role + `Memory.Growable` fresh-construction seams over a
-        // test-local region stub). The concrete `Memory.Heap` / `Memory.Inline` allocator integration
-        // suites + the heap pool-law application live in the leaf packages (post dependency-inversion:
-        // the leaves depend on allocation, never the reverse), where they can name the concrete leaves
-        // without re-introducing a package cycle.
         .testTarget(
             name: "Memory Allocation Primitives Tests",
             dependencies: [

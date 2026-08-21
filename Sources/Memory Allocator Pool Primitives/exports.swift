@@ -1,8 +1,3 @@
-//
-//  exports.swift
-//  swift-memory-allocation-primitives
-//
-
 @_exported public import Affine_Discrete_Primitives
 @_exported public import Bit_Vector_Primitives
 @_exported public import Index_Primitives

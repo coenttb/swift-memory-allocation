@@ -1,19 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-memory-allocation-primitives open source project
-//
-// Copyright (c) 2024-2026 Coen ten Thije Boonkkamp and the swift-memory-allocation-primitives project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-//
-// In-package surface tests for the element-free protocols (`Memory.Allocatable` adopt-role +
-// `Memory.Growable` fresh-construction). They exercise the generic seam over a test-local
-// `Memory.Region` stub so the package stays leaf-free (the concrete `Memory.Heap` / `Memory.Inline`
-// integration tests live in the leaf packages, post dependency-inversion).
-
 import Memory_Allocation_Primitives
 import Testing
 
@@ -23,21 +7,10 @@ struct `Memory.Allocatable Surface Tests` {
     @Suite struct `Edge Case` {}
     @Suite struct Integration {}
 
-    /// A self-owning raw byte region — the minimal `Memory.Growable` (and so `Memory.Allocatable`)
-    /// stub.
-    ///
-    /// Owns a malloc'd block and frees it on `deinit` (move-only ⇒ single free).
-    ///
-    /// ## Safety Invariant
-    ///
-    /// `@safe` absorber ([MEM-SAFE-020]): `pointer` is a self-owned malloc'd block, freed exactly
-    /// once on `deinit` (the struct is `~Copyable`). `base`/`capacity` only expose its extent; no
-    /// caller can observe the raw pointer.
     @safe
     struct Region: Memory.Growable, Memory.Allocatable, ~Copyable {
         let pointer: UnsafeMutableRawPointer
-        // swift-linter:disable:next compound identifier
-        // REASON: byteCount mirrors the stdlib UnsafeMutableRawPointer.allocate(byteCount:) parameter vocabulary (test-local stub, not a public surface).
+
         let byteCount: Int
 
         init(byteCount: Memory.Address.Count, alignment: Memory.Alignment) {
@@ -71,7 +44,7 @@ extension `Memory.Allocatable Surface Tests`.Unit {
             alignment: .`8`
         )
         let allocator = region.makeAllocator()
-        // The passthrough forwards the Region seam (base + capacity) of the adopted region.
+
         #expect(allocator.capacity == Memory.Address.Count(UInt(128)))
         #expect(allocator.base == allocator.base)
     }
