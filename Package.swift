@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-memory-allocation-primitives",
+    name: "swift-memory-allocation",
     platforms: [
         .macOS(.v27),
         .iOS(.v27),
@@ -19,18 +19,18 @@ let package = Package(
         ),
 
         .library(
-            name: "Memory Allocator Protocol Primitives",
-            targets: ["Memory Allocator Protocol Primitives"]
+            name: "Memory Allocator Protocol",
+            targets: ["Memory Allocator Protocol"]
         ),
 
         .library(
-            name: "Memory Allocator Arena Primitives",
-            targets: ["Memory Allocator Arena Primitives"]
+            name: "Memory Allocator Arena",
+            targets: ["Memory Allocator Arena"]
         ),
 
         .library(
-            name: "Memory Allocator Pool Primitives",
-            targets: ["Memory Allocator Pool Primitives"]
+            name: "Memory Allocator Pool",
+            targets: ["Memory Allocator Pool"]
         ),
 
         .library(
@@ -39,34 +39,34 @@ let package = Package(
         ),
 
         .library(
-            name: "Memory Allocation Primitives",
-            targets: ["Memory Allocation Primitives"]
+            name: "Memory Allocation",
+            targets: ["Memory Allocation"]
         ),
 
         .library(
-            name: "Memory Allocation Primitives Test Support",
-            targets: ["Memory Allocation Primitives Test Support"]
+            name: "Memory Allocation Test Support",
+            targets: ["Memory Allocation Test Support"]
         ),
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-primitives/swift-memory-primitives.git",
+            url: "https://github.com/swift-molecules/swift-memory.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-tagged-primitives.git",
+            url: "https://github.com/swift-molecules/swift-tagged.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-index-primitives.git",
+            url: "https://github.com/swift-molecules/swift-index.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-bit-vector-primitives.git",
+            url: "https://github.com/swift-molecules/swift-bit-vector.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-affine-primitives.git",
+            url: "https://github.com/swift-molecules/swift-affine.git",
             branch: "main"
         ),
     ],
@@ -75,21 +75,21 @@ let package = Package(
         .target(
             name: "Memory Allocator Primitive",
             dependencies: [
-                .product(name: "Memory Primitive", package: "swift-memory-primitives"),
-                .product(name: "Memory Region Primitives", package: "swift-memory-primitives"),
-                .product(name: "Memory Address Primitives", package: "swift-memory-primitives"),
-                .product(name: "Memory Alignment Primitives", package: "swift-memory-primitives"),
+                .product(name: "Memory Primitive", package: "swift-memory"),
+                .product(name: "Memory Region", package: "swift-memory"),
+                .product(name: "Memory Address", package: "swift-memory"),
+                .product(name: "Memory Alignment", package: "swift-memory"),
             ]
         ),
 
         .target(
-            name: "Memory Allocator Protocol Primitives",
+            name: "Memory Allocator Protocol",
             dependencies: [
                 "Memory Allocator Primitive",
-                .product(name: "Memory Primitive", package: "swift-memory-primitives"),
-                .product(name: "Memory Region Primitives", package: "swift-memory-primitives"),
-                .product(name: "Memory Address Primitives", package: "swift-memory-primitives"),
-                .product(name: "Memory Alignment Primitives", package: "swift-memory-primitives"),
+                .product(name: "Memory Primitive", package: "swift-memory"),
+                .product(name: "Memory Region", package: "swift-memory"),
+                .product(name: "Memory Address", package: "swift-memory"),
+                .product(name: "Memory Alignment", package: "swift-memory"),
             ]
         ),
 
@@ -97,81 +97,81 @@ let package = Package(
             name: "Memory Allocation Primitive",
             dependencies: [
                 "Memory Allocator Primitive",
-                .product(name: "Memory Primitive", package: "swift-memory-primitives"),
-                .product(name: "Memory Address Primitives", package: "swift-memory-primitives"),
-                .product(name: "Memory Alignment Primitives", package: "swift-memory-primitives"),
-                .product(name: "Tagged Primitives", package: "swift-tagged-primitives"),
+                .product(name: "Memory Primitive", package: "swift-memory"),
+                .product(name: "Memory Address", package: "swift-memory"),
+                .product(name: "Memory Alignment", package: "swift-memory"),
+                .product(name: "Tagged", package: "swift-tagged"),
             ]
         ),
 
         .target(
-            name: "Memory Allocator Arena Primitives",
+            name: "Memory Allocator Arena",
             dependencies: [
                 "Memory Allocator Primitive",
-                "Memory Allocator Protocol Primitives",
+                "Memory Allocator Protocol",
                 "Memory Allocation Primitive",
-                .product(name: "Memory Primitive", package: "swift-memory-primitives"),
-                .product(name: "Memory Region Primitives", package: "swift-memory-primitives"),
-                .product(name: "Memory Address Primitives", package: "swift-memory-primitives"),
-                .product(name: "Memory Alignment Primitives", package: "swift-memory-primitives"),
+                .product(name: "Memory Primitive", package: "swift-memory"),
+                .product(name: "Memory Region", package: "swift-memory"),
+                .product(name: "Memory Address", package: "swift-memory"),
+                .product(name: "Memory Alignment", package: "swift-memory"),
                 .product(
-                    name: "Memory Primitives Standard Library Integration",
-                    package: "swift-memory-primitives"
+                    name: "Memory Standard Library Integration",
+                    package: "swift-memory"
                 ),
             ]
         ),
 
         .target(
-            name: "Memory Allocator Pool Primitives",
+            name: "Memory Allocator Pool",
             dependencies: [
                 "Memory Allocator Primitive",
-                "Memory Allocator Protocol Primitives",
+                "Memory Allocator Protocol",
                 "Memory Allocation Primitive",
-                .product(name: "Memory Primitive", package: "swift-memory-primitives"),
-                .product(name: "Memory Region Primitives", package: "swift-memory-primitives"),
-                .product(name: "Memory Address Primitives", package: "swift-memory-primitives"),
-                .product(name: "Memory Alignment Primitives", package: "swift-memory-primitives"),
+                .product(name: "Memory Primitive", package: "swift-memory"),
+                .product(name: "Memory Region", package: "swift-memory"),
+                .product(name: "Memory Address", package: "swift-memory"),
+                .product(name: "Memory Alignment", package: "swift-memory"),
                 .product(
-                    name: "Memory Primitives Standard Library Integration",
-                    package: "swift-memory-primitives"
+                    name: "Memory Standard Library Integration",
+                    package: "swift-memory"
                 ),
-                .product(name: "Index Primitives", package: "swift-index-primitives"),
-                .product(name: "Bit Vector Primitives", package: "swift-bit-vector-primitives"),
-                .product(name: "Affine Discrete Primitives", package: "swift-affine-primitives"),
+                .product(name: "Index", package: "swift-index"),
+                .product(name: "Bit Vector", package: "swift-bit-vector"),
+                .product(name: "Affine Discrete", package: "swift-affine"),
                 .product(
-                    name: "Affine Primitives Standard Library Integration",
-                    package: "swift-affine-primitives"
+                    name: "Affine Standard Library Integration",
+                    package: "swift-affine"
                 ),
             ]
         ),
 
         .target(
-            name: "Memory Allocation Primitives",
+            name: "Memory Allocation",
             dependencies: [
                 "Memory Allocator Primitive",
-                "Memory Allocator Protocol Primitives",
+                "Memory Allocator Protocol",
                 "Memory Allocation Primitive",
-                "Memory Allocator Arena Primitives",
-                "Memory Allocator Pool Primitives",
+                "Memory Allocator Arena",
+                "Memory Allocator Pool",
             ]
         ),
 
         .target(
-            name: "Memory Allocation Primitives Test Support",
+            name: "Memory Allocation Test Support",
             dependencies: [
-                "Memory Allocator Pool Primitives",
-                .product(name: "Memory Primitive", package: "swift-memory-primitives"),
-                .product(name: "Index Primitives", package: "swift-index-primitives"),
+                "Memory Allocator Pool",
+                .product(name: "Memory Primitive", package: "swift-memory"),
+                .product(name: "Index", package: "swift-index"),
             ],
             path: "Tests/Support"
         ),
 
         .testTarget(
-            name: "Memory Allocation Primitives Tests",
+            name: "Memory Allocation Tests",
             dependencies: [
-                "Memory Allocation Primitives",
-                "Memory Allocation Primitives Test Support",
-                .product(name: "Index Primitives", package: "swift-index-primitives"),
+                "Memory Allocation",
+                "Memory Allocation Test Support",
+                .product(name: "Index", package: "swift-index"),
             ]
         ),
     ],

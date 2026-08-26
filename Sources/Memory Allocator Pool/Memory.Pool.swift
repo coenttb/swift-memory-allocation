@@ -1,5 +1,5 @@
-public import Index_Primitives
-public import Memory_Address_Primitives
+public import Index
+public import Memory_Address
 public import Memory_Primitive
 
 extension Memory {

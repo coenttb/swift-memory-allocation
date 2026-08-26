@@ -1,7 +1,7 @@
-# Memory Allocation Primitives
+# Memory Allocation
 
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
-[![CI](https://github.com/swift-primitives/swift-memory-allocation-primitives/actions/workflows/ci.yml/badge.svg)](https://github.com/swift-primitives/swift-memory-allocation-primitives/actions/workflows/ci.yml)
+[![CI](https://github.com/swift-molecules/swift-memory-allocation/actions/workflows/ci.yml/badge.svg)](https://github.com/swift-molecules/swift-memory-allocation/actions/workflows/ci.yml)
 
 `Memory.Allocator<Resource>` — allocators that carve a raw memory region into slots. The allocator is generic over its backing `Resource` (any `Memory.Region` — a `Memory.Heap` for heap-backed allocation, a `Memory.Inline<n>` for allocation with no heap at all) and comes in three strategies: a passthrough `System` allocator that adopts the whole region as one allocation, a bump `Arena` that hands out a moving cursor and frees everything on `reset()`, and a fixed-size `Pool` that allocates and frees individual slots in O(1).
 
@@ -22,7 +22,7 @@ Allocation and deallocation are expressed through one capability seam, `Memory.A
 ## Quick Start
 
 ```swift
-import Memory_Allocation_Primitives
+import Memory_Allocation
 
 // A fixed-size slot pool over a freshly allocated heap region.
 var pool = try Memory.Allocator<Memory.Heap>.Pool(
@@ -49,11 +49,11 @@ var inlinePool = try Memory.Allocator<Memory.Inline<4096>>.Pool(
 
 | Product | Contents | When to import |
 |---------|----------|----------------|
-| `Memory Allocation Primitives` | Umbrella — re-exports the seam, the allocator, and the arena + pool strategies | Most consumers |
+| `Memory Allocation` | Umbrella — re-exports the seam, the allocator, and the arena + pool strategies | Most consumers |
 | `Memory Allocation Primitive` | `Memory.Allocation.Protocol` / `Memory.Allocating` — the allocate / deallocate capability seam — and `Memory.Allocation.Error` | Writing code generic over "something that allocates" |
 | `Memory Allocator Primitive` | `Memory.Allocator<Resource>` and `Memory.Allocator.System`, the passthrough allocator | Naming the allocator base or the system allocator directly |
-| `Memory Allocator Arena Primitives` | `Memory.Allocator.Arena` — the bump / linear allocator | Linear allocation with bulk `reset()` |
-| `Memory Allocator Pool Primitives` | `Memory.Allocator.Pool` — the fixed-size slot pool | Fixed-size slot pooling |
+| `Memory Allocator Arena` | `Memory.Allocator.Arena` — the bump / linear allocator | Linear allocation with bulk `reset()` |
+| `Memory Allocator Pool` | `Memory.Allocator.Pool` — the fixed-size slot pool | Fixed-size slot pooling |
 
 ---
 
@@ -93,9 +93,9 @@ The bump arena throws `.insufficientCapacity(requested:available:)` when a reque
 
 ## Related Packages
 
-- [`swift-memory-heap-primitives`](https://github.com/swift-primitives/swift-memory-heap-primitives) — `Memory.Heap`, the heap-allocated region an allocator carves.
-- [`swift-memory-inline-primitives`](https://github.com/swift-primitives/swift-memory-inline-primitives) — `Memory.Inline<n>`, the inline region for heap-free allocation.
-- [`swift-memory-primitives`](https://github.com/swift-primitives/swift-memory-primitives) — `Memory.Region`, the backing seam an allocator's `Resource` conforms to.
+- [`swift-memory-heap`](https://github.com/swift-molecules/swift-memory-heap) — `Memory.Heap`, the heap-allocated region an allocator carves.
+- [`swift-memory-inline`](https://github.com/swift-molecules/swift-memory-inline) — `Memory.Inline<n>`, the inline region for heap-free allocation.
+- [`swift-memory`](https://github.com/swift-molecules/swift-memory) — `Memory.Region`, the backing seam an allocator's `Resource` conforms to.
 
 ---
 

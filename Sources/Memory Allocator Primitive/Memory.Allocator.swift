@@ -1,7 +1,7 @@
-public import Memory_Address_Primitives
-import Memory_Alignment_Primitives
+public import Memory_Address
+import Memory_Alignment
 public import Memory_Primitive
-public import Memory_Region_Primitives
+public import Memory_Region
 
 extension Memory {
 

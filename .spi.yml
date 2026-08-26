@@ -3,8 +3,8 @@ builder:
   configs:
   - documentation_targets:
     - Memory Allocator Primitive
-    - Memory Allocator Protocol Primitives
-    - Memory Allocator Arena Primitives
-    - Memory Allocator Pool Primitives
+    - Memory Allocator Protocol
+    - Memory Allocator Arena
+    - Memory Allocator Pool
     - Memory Allocation Primitive
-    - Memory Allocation Primitives
+    - Memory Allocation

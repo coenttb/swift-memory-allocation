@@ -1,4 +1,4 @@
-public import Memory_Allocator_Protocol_Primitives
+public import Memory_Allocator_Protocol
 
 extension Memory.Allocator.Arena: Memory.Allocator.`Protocol` where Resource: ~Copyable {
 

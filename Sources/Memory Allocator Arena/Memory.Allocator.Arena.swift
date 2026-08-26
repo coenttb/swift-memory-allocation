@@ -1,10 +1,10 @@
-public import Memory_Address_Primitives
-import Memory_Alignment_Primitives
+public import Memory_Address
+import Memory_Alignment
 import Memory_Allocation_Primitive
 public import Memory_Allocator_Primitive
 public import Memory_Primitive
-import Memory_Primitives_Standard_Library_Integration
-public import Memory_Region_Primitives
+import Memory_Standard_Library_Integration
+public import Memory_Region
 
 extension Memory.Allocator where Resource: ~Copyable {
 

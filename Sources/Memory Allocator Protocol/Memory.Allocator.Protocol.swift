@@ -1,5 +1,5 @@
-public import Memory_Address_Primitives
-public import Memory_Alignment_Primitives
+public import Memory_Address
+public import Memory_Alignment
 public import Memory_Allocator_Primitive
 public import Memory_Primitive
 

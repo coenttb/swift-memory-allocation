@@ -1,6 +1,6 @@
 public import Memory_Primitive
-public import Memory_Allocator_Pool_Primitives
-import Index_Primitives
+public import Memory_Allocator_Pool
+import Index
 
 extension Memory.Pool {
 

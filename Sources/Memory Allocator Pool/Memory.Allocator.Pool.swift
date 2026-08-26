@@ -1,7 +1,7 @@
-public import Affine_Discrete_Primitives
-public import Bit_Vector_Primitives
-public import Index_Primitives
-public import Memory_Alignment_Primitives
+public import Affine_Discrete
+public import Bit_Vector
+public import Index
+public import Memory_Alignment
 public import Memory_Allocator_Primitive
 public import Memory_Primitive
 

@@ -1,4 +1,4 @@
-public import Index_Primitives
+public import Index
 public import Memory_Primitive
 
 extension Memory.Pool {
