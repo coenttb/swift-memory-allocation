@@ -1,4 +1,11 @@
+public import Affine_Carrier
+public import Affine_Tagged
+public import Cardinal_Carrier
+public import Cardinal_Comparison
+public import Cardinal_Tagged
+public import Memory_Carrier
 public import Memory_Allocator_Protocol
+public import Tagged_Carrier
 
 extension Memory.Allocator.Arena: Memory.Allocator.`Protocol` where Resource: ~Copyable {
 

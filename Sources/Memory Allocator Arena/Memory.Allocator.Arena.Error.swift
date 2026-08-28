@@ -1,6 +1,5 @@
-public import Memory_Address
+public import Memory
 public import Memory_Allocation_Primitive
-public import Memory_Primitive
 
 extension Memory.Allocator.Arena where Resource: ~Copyable {
 

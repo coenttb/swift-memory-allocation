@@ -50,15 +50,15 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-molecules/swift-memory.git",
+            url: "https://github.com/swift-atoms/swift-memory.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-molecules/swift-tagged.git",
+            url: "https://github.com/swift-atoms/swift-tagged.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-molecules/swift-index.git",
+            url: "https://github.com/swift-atoms/swift-index.git",
             branch: "main"
         ),
         .package(
@@ -66,7 +66,39 @@ let package = Package(
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-molecules/swift-affine.git",
+            url: "https://github.com/swift-atoms/swift-affine.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-atoms/swift-cardinal.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-cardinal-comparison.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-cardinal-carrier.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-cardinal-tagged.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-tagged-carrier.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-affine-tagged.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-affine-carrier.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-memory-carrier.git",
             branch: "main"
         ),
     ],
@@ -75,10 +107,7 @@ let package = Package(
         .target(
             name: "Memory Allocator Primitive",
             dependencies: [
-                .product(name: "Memory Primitive", package: "swift-memory"),
-                .product(name: "Memory Region", package: "swift-memory"),
-                .product(name: "Memory Address", package: "swift-memory"),
-                .product(name: "Memory Alignment", package: "swift-memory"),
+                .product(name: "Memory", package: "swift-memory"),
             ]
         ),
 
@@ -86,10 +115,9 @@ let package = Package(
             name: "Memory Allocator Protocol",
             dependencies: [
                 "Memory Allocator Primitive",
-                .product(name: "Memory Primitive", package: "swift-memory"),
-                .product(name: "Memory Region", package: "swift-memory"),
-                .product(name: "Memory Address", package: "swift-memory"),
-                .product(name: "Memory Alignment", package: "swift-memory"),
+                .product(name: "Memory", package: "swift-memory"),
+                .product(name: "Tagged", package: "swift-tagged"),
+                .product(name: "Cardinal Comparison", package: "swift-cardinal-comparison"),
             ]
         ),
 
@@ -97,9 +125,7 @@ let package = Package(
             name: "Memory Allocation Primitive",
             dependencies: [
                 "Memory Allocator Primitive",
-                .product(name: "Memory Primitive", package: "swift-memory"),
-                .product(name: "Memory Address", package: "swift-memory"),
-                .product(name: "Memory Alignment", package: "swift-memory"),
+                .product(name: "Memory", package: "swift-memory"),
                 .product(name: "Tagged", package: "swift-tagged"),
             ]
         ),
@@ -110,14 +136,15 @@ let package = Package(
                 "Memory Allocator Primitive",
                 "Memory Allocator Protocol",
                 "Memory Allocation Primitive",
-                .product(name: "Memory Primitive", package: "swift-memory"),
-                .product(name: "Memory Region", package: "swift-memory"),
-                .product(name: "Memory Address", package: "swift-memory"),
-                .product(name: "Memory Alignment", package: "swift-memory"),
-                .product(
-                    name: "Memory Standard Library Integration",
-                    package: "swift-memory"
-                ),
+                .product(name: "Memory", package: "swift-memory"),
+                .product(name: "Tagged", package: "swift-tagged"),
+                .product(name: "Memory Carrier", package: "swift-memory-carrier"),
+                .product(name: "Cardinal Carrier", package: "swift-cardinal-carrier"),
+                .product(name: "Cardinal Comparison", package: "swift-cardinal-comparison"),
+                .product(name: "Cardinal Tagged", package: "swift-cardinal-tagged"),
+                .product(name: "Tagged Carrier", package: "swift-tagged-carrier"),
+                .product(name: "Affine Carrier", package: "swift-affine-carrier"),
+                .product(name: "Affine Tagged", package: "swift-affine-tagged"),
             ]
         ),
 
@@ -127,21 +154,19 @@ let package = Package(
                 "Memory Allocator Primitive",
                 "Memory Allocator Protocol",
                 "Memory Allocation Primitive",
-                .product(name: "Memory Primitive", package: "swift-memory"),
-                .product(name: "Memory Region", package: "swift-memory"),
-                .product(name: "Memory Address", package: "swift-memory"),
-                .product(name: "Memory Alignment", package: "swift-memory"),
-                .product(
-                    name: "Memory Standard Library Integration",
-                    package: "swift-memory"
-                ),
+                .product(name: "Memory", package: "swift-memory"),
+                .product(name: "Tagged", package: "swift-tagged"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
+                .product(name: "Memory Carrier", package: "swift-memory-carrier"),
+                .product(name: "Cardinal Carrier", package: "swift-cardinal-carrier"),
                 .product(name: "Index", package: "swift-index"),
                 .product(name: "Bit Vector", package: "swift-bit-vector"),
-                .product(name: "Affine Discrete", package: "swift-affine"),
-                .product(
-                    name: "Affine Standard Library Integration",
-                    package: "swift-affine"
-                ),
+                .product(name: "Affine", package: "swift-affine"),
+                .product(name: "Cardinal Comparison", package: "swift-cardinal-comparison"),
+                .product(name: "Cardinal Tagged", package: "swift-cardinal-tagged"),
+                .product(name: "Tagged Carrier", package: "swift-tagged-carrier"),
+                .product(name: "Affine Carrier", package: "swift-affine-carrier"),
+                .product(name: "Affine Tagged", package: "swift-affine-tagged"),
             ]
         ),
 
@@ -160,7 +185,7 @@ let package = Package(
             name: "Memory Allocation Test Support",
             dependencies: [
                 "Memory Allocator Pool",
-                .product(name: "Memory Primitive", package: "swift-memory"),
+                .product(name: "Memory", package: "swift-memory"),
                 .product(name: "Index", package: "swift-index"),
             ],
             path: "Tests/Support"

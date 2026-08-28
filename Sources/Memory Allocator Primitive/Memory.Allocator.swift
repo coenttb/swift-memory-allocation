@@ -1,7 +1,4 @@
-public import Memory_Address
-import Memory_Alignment
-public import Memory_Primitive
-public import Memory_Region
+public import Memory
 
 extension Memory {
 

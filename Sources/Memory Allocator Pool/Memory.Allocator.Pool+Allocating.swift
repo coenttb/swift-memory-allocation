@@ -1,7 +1,5 @@
-public import Memory_Address
-public import Memory_Alignment
+public import Memory
 public import Memory_Allocator_Protocol
-public import Memory_Primitive
 
 extension Memory.Allocator.Pool: Memory.Allocator.`Protocol` where Resource: ~Copyable {
 

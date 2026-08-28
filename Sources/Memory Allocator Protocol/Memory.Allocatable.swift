@@ -1,4 +1,4 @@
-public import Memory_Primitive
+public import Memory
 
 extension Memory {
 

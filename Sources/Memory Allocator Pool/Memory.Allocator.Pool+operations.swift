@@ -1,12 +1,17 @@
-public import Affine_Discrete
+public import Affine
+public import Affine_Carrier
+public import Affine_Tagged
 public import Bit_Vector
+public import Cardinal
+public import Cardinal_Carrier
+public import Cardinal_Comparison
+public import Cardinal_Tagged
+public import Memory_Carrier
+public import Tagged
+public import Tagged_Carrier
 public import Index
-public import Memory_Address
-public import Memory_Alignment
+public import Memory
 public import Memory_Allocator_Primitive
-public import Memory_Primitive
-public import Memory_Standard_Library_Integration
-public import Memory_Region
 
 extension Memory.Allocator.Pool where Resource: ~Copyable {
 
@@ -61,13 +66,13 @@ extension Memory.Allocator.Pool where Resource: ~Copyable {
 extension Memory.Allocator.Pool where Resource: ~Copyable {
 
     @inlinable
-    public var capacity: Index<Slot>.Count { _capacity }
+    public var capacity: Tagged<Slot, Cardinal> { _capacity }
 
     @inlinable
-    public var allocated: Index<Slot>.Count { _allocated }
+    public var allocated: Tagged<Slot, Cardinal> { _allocated }
 
     @inlinable
-    public var available: Index<Slot>.Count {
+    public var available: Tagged<Slot, Cardinal> {
         _capacity.subtract.saturating(_allocated)
     }
 

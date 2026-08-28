@@ -1,11 +1,13 @@
+public import Cardinal
 public import Index
-public import Memory_Primitive
+public import Memory
+public import Tagged
 
 extension Memory.Pool {
 
     public protocol `Protocol`: ~Copyable {
 
-        var capacity: Index<Memory.Pool.Slot>.Count { get }
+        var capacity: Tagged<Memory.Pool.Slot, Cardinal> { get }
 
         @unsafe func pointer(at index: Index<Memory.Pool.Slot>) -> UnsafeMutableRawPointer
 

@@ -1,6 +1,6 @@
-public import Index
-public import Memory_Address
-public import Memory_Primitive
+public import Cardinal
+public import Memory
+public import Tagged
 
 extension Memory {
 
@@ -10,7 +10,7 @@ extension Memory {
 
         public enum Error: Swift.Error, Equatable, Sendable {
 
-            case exhausted(capacity: Index<Slot>.Count)
+            case exhausted(capacity: Tagged<Slot, Cardinal>)
 
             case slotSizeTooSmall(requested: Memory.Address.Count, minimum: Memory.Address.Count)
 

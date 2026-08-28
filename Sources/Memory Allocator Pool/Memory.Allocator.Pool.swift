@@ -1,9 +1,10 @@
-public import Affine_Discrete
+public import Affine
 public import Bit_Vector
+public import Cardinal
 public import Index
-public import Memory_Alignment
+public import Memory
 public import Memory_Allocator_Primitive
-public import Memory_Primitive
+public import Tagged
 
 extension Memory.Allocator where Resource: ~Copyable {
 
@@ -19,9 +20,9 @@ extension Memory.Allocator where Resource: ~Copyable {
 
         @usableFromInline internal let _slotAlignment: Memory.Alignment
 
-        @usableFromInline internal let _capacity: Index<Slot>.Count
+        @usableFromInline internal let _capacity: Tagged<Slot, Cardinal>
 
-        @usableFromInline internal var _allocated: Index<Slot>.Count
+        @usableFromInline internal var _allocated: Tagged<Slot, Cardinal>
 
         @usableFromInline internal var _freeHead: Index<Slot>
 
@@ -34,8 +35,8 @@ extension Memory.Allocator where Resource: ~Copyable {
             adopting backing: consuming Resource,
             slotStride: Affine.Discrete.Ratio<Slot, Memory>,
             slotAlignment: Memory.Alignment,
-            capacity: Index<Slot>.Count,
-            allocated: Index<Slot>.Count,
+            capacity: Tagged<Slot, Cardinal>,
+            allocated: Tagged<Slot, Cardinal>,
             freeHead: Index<Slot>,
             nextUnused: Index<Slot>,
             allocationBits: consuming Bit.Vector

@@ -1,7 +1,5 @@
-public import Memory_Address
-public import Memory_Alignment
+public import Memory
 public import Memory_Allocator_Primitive
-public import Memory_Primitive
 
 public protocol __MemoryAllocatorProtocol: ~Copyable {
 

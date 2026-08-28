@@ -1,10 +1,10 @@
-public import Memory_Address
-import Memory_Alignment
+public import Cardinal_Carrier
+public import Cardinal_Tagged
+public import Tagged
+public import Tagged_Carrier
+public import Memory
 import Memory_Allocation_Primitive
 public import Memory_Allocator_Primitive
-public import Memory_Primitive
-import Memory_Standard_Library_Integration
-public import Memory_Region
 
 extension Memory.Allocator where Resource: ~Copyable {
 

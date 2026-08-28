@@ -1,4 +1,4 @@
-public import Memory_Primitive
+public import Memory
 public import Memory_Allocator_Pool
 import Index
 
