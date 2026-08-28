@@ -12,191 +12,75 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
-
         .library(
-            name: "Memory Allocator Primitive",
-            targets: ["Memory Allocator Primitive"]
+            name: "Memory Allocator",
+            targets: ["Memory Allocator"]
         ),
-
         .library(
             name: "Memory Allocator Protocol",
             targets: ["Memory Allocator Protocol"]
         ),
-
-        .library(
-            name: "Memory Allocator Arena",
-            targets: ["Memory Allocator Arena"]
-        ),
-
-        .library(
-            name: "Memory Allocator Pool",
-            targets: ["Memory Allocator Pool"]
-        ),
-
-        .library(
-            name: "Memory Allocation Primitive",
-            targets: ["Memory Allocation Primitive"]
-        ),
-
         .library(
             name: "Memory Allocation",
             targets: ["Memory Allocation"]
         ),
-
         .library(
-            name: "Memory Allocation Test Support",
-            targets: ["Memory Allocation Test Support"]
+            name: "Memory Pool",
+            targets: ["Memory Pool"]
+        ),
+        .library(
+            name: "Memory Pool Test Support",
+            targets: ["Memory Pool Test Support"]
         ),
     ],
     dependencies: [
-        .package(
-            url: "https://github.com/swift-atoms/swift-memory.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-atoms/swift-tagged.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-atoms/swift-index.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-molecules/swift-bit-vector.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-atoms/swift-affine.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-atoms/swift-cardinal.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-molecules/swift-cardinal-comparison.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-molecules/swift-cardinal-carrier.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-molecules/swift-cardinal-tagged.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-molecules/swift-tagged-carrier.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-molecules/swift-affine-tagged.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-molecules/swift-affine-carrier.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-molecules/swift-memory-carrier.git",
-            branch: "main"
-        ),
+        .package(url: "https://github.com/swift-atoms/swift-memory.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-tagged.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-index.git", branch: "main"),
     ],
     targets: [
-
         .target(
-            name: "Memory Allocator Primitive",
+            name: "Memory Allocator",
             dependencies: [
                 .product(name: "Memory", package: "swift-memory"),
             ]
         ),
-
         .target(
             name: "Memory Allocator Protocol",
             dependencies: [
-                "Memory Allocator Primitive",
+                .target(name: "Memory Allocator"),
                 .product(name: "Memory", package: "swift-memory"),
-                .product(name: "Tagged", package: "swift-tagged"),
-                .product(name: "Cardinal Comparison", package: "swift-cardinal-comparison"),
             ]
         ),
-
-        .target(
-            name: "Memory Allocation Primitive",
-            dependencies: [
-                "Memory Allocator Primitive",
-                .product(name: "Memory", package: "swift-memory"),
-                .product(name: "Tagged", package: "swift-tagged"),
-            ]
-        ),
-
-        .target(
-            name: "Memory Allocator Arena",
-            dependencies: [
-                "Memory Allocator Primitive",
-                "Memory Allocator Protocol",
-                "Memory Allocation Primitive",
-                .product(name: "Memory", package: "swift-memory"),
-                .product(name: "Tagged", package: "swift-tagged"),
-                .product(name: "Memory Carrier", package: "swift-memory-carrier"),
-                .product(name: "Cardinal Carrier", package: "swift-cardinal-carrier"),
-                .product(name: "Cardinal Comparison", package: "swift-cardinal-comparison"),
-                .product(name: "Cardinal Tagged", package: "swift-cardinal-tagged"),
-                .product(name: "Tagged Carrier", package: "swift-tagged-carrier"),
-                .product(name: "Affine Carrier", package: "swift-affine-carrier"),
-                .product(name: "Affine Tagged", package: "swift-affine-tagged"),
-            ]
-        ),
-
-        .target(
-            name: "Memory Allocator Pool",
-            dependencies: [
-                "Memory Allocator Primitive",
-                "Memory Allocator Protocol",
-                "Memory Allocation Primitive",
-                .product(name: "Memory", package: "swift-memory"),
-                .product(name: "Tagged", package: "swift-tagged"),
-                .product(name: "Cardinal", package: "swift-cardinal"),
-                .product(name: "Memory Carrier", package: "swift-memory-carrier"),
-                .product(name: "Cardinal Carrier", package: "swift-cardinal-carrier"),
-                .product(name: "Index", package: "swift-index"),
-                .product(name: "Bit Vector", package: "swift-bit-vector"),
-                .product(name: "Affine", package: "swift-affine"),
-                .product(name: "Cardinal Comparison", package: "swift-cardinal-comparison"),
-                .product(name: "Cardinal Tagged", package: "swift-cardinal-tagged"),
-                .product(name: "Tagged Carrier", package: "swift-tagged-carrier"),
-                .product(name: "Affine Carrier", package: "swift-affine-carrier"),
-                .product(name: "Affine Tagged", package: "swift-affine-tagged"),
-            ]
-        ),
-
         .target(
             name: "Memory Allocation",
             dependencies: [
-                "Memory Allocator Primitive",
-                "Memory Allocator Protocol",
-                "Memory Allocation Primitive",
-                "Memory Allocator Arena",
-                "Memory Allocator Pool",
+                .product(name: "Memory", package: "swift-memory"),
+                .product(name: "Tagged", package: "swift-tagged"),
             ]
         ),
-
         .target(
-            name: "Memory Allocation Test Support",
+            name: "Memory Pool",
             dependencies: [
-                "Memory Allocator Pool",
+                .product(name: "Memory", package: "swift-memory"),
+                .product(name: "Index", package: "swift-index"),
+            ]
+        ),
+        .target(
+            name: "Memory Pool Test Support",
+            dependencies: [
+                .target(name: "Memory Pool"),
                 .product(name: "Memory", package: "swift-memory"),
                 .product(name: "Index", package: "swift-index"),
             ],
             path: "Tests/Support"
         ),
-
         .testTarget(
             name: "Memory Allocation Tests",
             dependencies: [
-                "Memory Allocation",
-                "Memory Allocation Test Support",
-                .product(name: "Index", package: "swift-index"),
+                .target(name: "Memory Allocator"),
+                .target(name: "Memory Allocator Protocol"),
+                .product(name: "Memory", package: "swift-memory"),
             ]
         ),
     ],

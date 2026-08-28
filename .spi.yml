@@ -2,9 +2,7 @@ version: 1
 builder:
   configs:
   - documentation_targets:
-    - Memory Allocator Primitive
+    - Memory Allocator
     - Memory Allocator Protocol
-    - Memory Allocator Arena
-    - Memory Allocator Pool
-    - Memory Allocation Primitive
     - Memory Allocation
+    - Memory Pool

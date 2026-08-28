@@ -1,5 +1,5 @@
 public import Memory
-public import Memory_Allocator_Primitive
+public import Memory_Allocator
 
 public protocol __MemoryAllocatorProtocol: ~Copyable {
 

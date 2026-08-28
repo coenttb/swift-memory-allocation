@@ -1,7 +1,5 @@
-public import Cardinal_Comparison
-public import Tagged
 public import Memory
-public import Memory_Allocator_Primitive
+public import Memory_Allocator
 
 extension Memory.Allocator: __MemoryAllocatorProtocol where Resource: ~Copyable {
 

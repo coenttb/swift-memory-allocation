@@ -1,4 +1,5 @@
-import Memory_Allocation
+import Memory
+import Memory_Allocator_Protocol
 import Testing
 
 @Suite(.serialized)
@@ -47,49 +48,5 @@ extension `Memory.Allocatable Surface Tests`.Unit {
 
         #expect(allocator.capacity == Memory.Address.Count(UInt(128)))
         #expect(allocator.base == allocator.base)
-    }
-
-    @Test func `arena aligns sequential allocations`() throws {
-        let region = `Memory.Allocatable Surface Tests`.Region(
-            byteCount: Memory.Address.Count(UInt(64)),
-            alignment: .`8`
-        )
-        var arena = Memory.Allocator.Arena(region)
-
-        let first = try arena.allocate(
-            count: Memory.Address.Count(UInt(1)),
-            alignment: .`8`
-        )
-        let second = try arena.allocate(
-            count: Memory.Address.Count(UInt(1)),
-            alignment: .`8`
-        )
-
-        #expect(first == arena.start)
-        #expect(unsafe second.mutablePointer - first.mutablePointer == 8)
-        #expect(arena.allocated == Memory.Address.Count(UInt(9)))
-        #expect(arena.remaining == Memory.Address.Count(UInt(55)))
-    }
-
-    @Test func `pool recycles a deallocated slot`() throws {
-        let region = `Memory.Allocatable Surface Tests`.Region(
-            byteCount: Memory.Address.Count(UInt(64)),
-            alignment: .`8`
-        )
-        var pool = try Memory.Allocator.Pool(
-            carving: region,
-            slotSize: Memory.Address.Count(UInt(16)),
-            slotAlignment: .`8`
-        )
-
-        let first = try pool.allocateSlot()
-        let second = try pool.allocateSlot()
-        #expect(unsafe pool.pointer(at: second) - pool.pointer(at: first) == 16)
-
-        try pool.deallocate(at: first)
-        let recycled = try pool.allocateSlot()
-        #expect(recycled == first)
-        #expect(Int(bitPattern: pool.capacity) == 4)
-        #expect(Int(bitPattern: pool.allocated) == 2)
     }
 }

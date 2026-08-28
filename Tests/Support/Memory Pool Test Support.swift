@@ -1,5 +1,5 @@
 public import Memory
-public import Memory_Allocator_Pool
+public import Memory_Pool
 import Index
 
 extension Memory.Pool {
