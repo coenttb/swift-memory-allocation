@@ -1,4 +1,5 @@
-import Memory_Allocation_Primitives
+import Memory
+import Memory_Allocator_Protocol
 import Testing
 
 @Suite(.serialized)

@@ -1,7 +1,5 @@
-public import Memory_Address_Primitives
-public import Memory_Alignment_Primitives
-public import Memory_Allocator_Primitive
-public import Memory_Primitive
+public import Memory
+public import Memory_Allocator
 
 extension Memory.Allocator: __MemoryAllocatorProtocol where Resource: ~Copyable {
 
