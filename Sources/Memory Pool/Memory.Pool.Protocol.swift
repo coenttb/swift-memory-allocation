@@ -5,12 +5,12 @@ extension Memory.Pool {
 
     public protocol `Protocol`: ~Copyable {
 
-        var capacity: Index<Memory.Pool.Slot>.Count { get }
+        var capacity: Memory.Pool.Count { get }
 
-        @unsafe func pointer(at index: Index<Memory.Pool.Slot>) -> UnsafeMutableRawPointer
+        @unsafe func pointer(at index: Index::Index<Memory.Pool.Slot>) -> UnsafeMutableRawPointer
 
-        mutating func allocateSlot() throws(Memory.Pool.Error) -> Index<Memory.Pool.Slot>
+        mutating func allocateSlot() throws(Memory.Pool.Error) -> Index::Index<Memory.Pool.Slot>
 
-        mutating func deallocate(at slot: Index<Memory.Pool.Slot>) throws(Memory.Pool.Error)
+        mutating func deallocate(at slot: Index::Index<Memory.Pool.Slot>) throws(Memory.Pool.Error)
     }
 }

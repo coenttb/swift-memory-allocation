@@ -1,3 +1,5 @@
+import Cardinal_Standard_Library_Integration
+import Cardinal_Tagged
 import Memory
 import Memory_Allocator_Protocol
 import Testing

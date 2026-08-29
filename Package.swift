@@ -34,6 +34,7 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(url: "https://github.com/swift-atoms/swift-cardinal.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-memory.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-tagged.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-index.git", branch: "main"),
@@ -49,7 +50,9 @@ let package = Package(
             name: "Memory Allocator Protocol",
             dependencies: [
                 .target(name: "Memory Allocator"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
                 .product(name: "Memory", package: "swift-memory"),
+                .product(name: "Tagged", package: "swift-tagged"),
             ]
         ),
         .target(
@@ -62,16 +65,20 @@ let package = Package(
         .target(
             name: "Memory Pool",
             dependencies: [
+                .product(name: "Cardinal", package: "swift-cardinal"),
                 .product(name: "Memory", package: "swift-memory"),
                 .product(name: "Index", package: "swift-index"),
+                .product(name: "Tagged", package: "swift-tagged"),
             ]
         ),
         .target(
             name: "Memory Pool Test Support",
             dependencies: [
                 .target(name: "Memory Pool"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
                 .product(name: "Memory", package: "swift-memory"),
                 .product(name: "Index", package: "swift-index"),
+                .product(name: "Tagged", package: "swift-tagged"),
             ],
             path: "Tests/Support"
         ),
@@ -80,7 +87,14 @@ let package = Package(
             dependencies: [
                 .target(name: "Memory Allocator"),
                 .target(name: "Memory Allocator Protocol"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
+                .product(
+                    name: "Cardinal Standard Library Integration",
+                    package: "swift-cardinal"
+                ),
+                .product(name: "Cardinal Tagged", package: "swift-cardinal"),
                 .product(name: "Memory", package: "swift-memory"),
+                .product(name: "Tagged", package: "swift-tagged"),
             ]
         ),
     ],
