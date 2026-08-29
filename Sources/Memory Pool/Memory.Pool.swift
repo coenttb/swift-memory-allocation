@@ -1,5 +1,5 @@
 public import Cardinal
-public import Index
+import Index
 public import Memory
 public import Tagged
 
