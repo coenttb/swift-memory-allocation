@@ -1,5 +1,7 @@
+public import Cardinal
 public import Memory
 public import Memory_Allocator
+public import Tagged
 
 extension Memory.Allocator: __MemoryAllocatorProtocol where Resource: ~Copyable {
 

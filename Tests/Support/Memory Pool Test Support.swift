@@ -1,6 +1,8 @@
 public import Memory
 public import Memory_Pool
+internal import Cardinal
 import Index
+internal import Tagged
 
 extension Memory.Pool {
 
@@ -13,7 +15,7 @@ extension Memory.Pool {
             var found: [String] = []
             var pool = makePool()
 
-            if Int(bitPattern: pool.capacity) != expectedCapacity {
+            if Int(bitPattern: pool.capacity.underlying.rawValue) != expectedCapacity {
                 found.append("capacity: constructed \(expectedCapacity) but observes \(pool.capacity)")
             }
 
