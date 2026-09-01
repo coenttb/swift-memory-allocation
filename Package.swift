@@ -25,6 +25,10 @@ let package = Package(
             targets: ["Memory Allocation"]
         ),
         .library(
+            name: "Memory Allocator Pool",
+            targets: ["Memory Allocator Pool"]
+        ),
+        .library(
             name: "Memory Pool",
             targets: ["Memory Pool"]
         ),
@@ -38,7 +42,11 @@ let package = Package(
         .package(url: "https://github.com/swift-atoms/swift-memory.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-tagged.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-index.git", branch: "main"),
-    ],
+        .package(url: "https://github.com/swift-atoms/swift-affine.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-bit.git", branch: "main"),
+        .package(url: "https://github.com/swift-molecules/swift-tagged-carrier.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-ordinal.git", branch: "main"),
+            ],
     targets: [
         .target(
             name: "Memory Allocator",
@@ -53,6 +61,33 @@ let package = Package(
                 .product(name: "Cardinal", package: "swift-cardinal"),
                 .product(name: "Memory", package: "swift-memory"),
                 .product(name: "Tagged", package: "swift-tagged"),
+            ]
+        ),
+        .target(
+            name: "Memory Allocator Pool",
+            dependencies: [
+                .target(name: "Memory Allocator"),
+                .target(name: "Memory Allocator Protocol"),
+                .target(name: "Memory Pool"),
+                .product(name: "Memory", package: "swift-memory"),
+                .product(
+                    name: "Memory Standard Library Integration",
+                    package: "swift-memory"
+                ),
+                .product(name: "Index", package: "swift-index"),
+                .product(name: "Affine Discrete", package: "swift-affine"),
+                .product(name: "Affine Quotient", package: "swift-affine"),
+                .product(name: "Affine Tagged", package: "swift-affine"),
+                .product(name: "Ordinal Cardinal", package: "swift-ordinal"),
+                .product(name: "Ordinal Tagged", package: "swift-ordinal"),
+                .product(name: "Tagged Carrier", package: "swift-tagged-carrier"),
+                .product(name: "Bit", package: "swift-bit"),
+                .product(name: "Cardinal Carrier", package: "swift-cardinal"),
+                .product(name: "Cardinal Tagged", package: "swift-cardinal"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
+                .product(name: "Tagged", package: "swift-tagged"),
+                .product(name: "Ordinal", package: "swift-ordinal"),
+                .product(name: "Ordinal Protocol", package: "swift-ordinal"),
             ]
         ),
         .target(
